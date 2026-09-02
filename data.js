@@ -22,6 +22,28 @@ const SITE = {
    { type: "photo", title: "Site photo", src: "media/kadiri-town/land-1/photo1.jpg" }
    type = "photo" | "video" | "pdf"                                                   */
 
+/* ============================================================
+   DISTRICT HEAD QUARTERS — LAND INFO
+   Sub-divisions kanna mundu, prathyeka tab ga kanipistundi.
+   Ikkada police station level ledu — lands direct ga untayi.
+   Kotta land kavali ante lands: [ ] lopala oka line paste cheyyandi.
+   Media path: media/dhq/land-1/photo1.jpg
+   ============================================================ */
+
+const HEADQUARTERS = {
+  id: "dhq",
+  name: "District Head Quarters",
+  nameTe: "జిల్లా పోలీసు ప్రధాన కార్యాలయం",
+  color: "#8A6D1A",
+  lands: [
+    { id: "land-1", name: "Land 1", survey: "", extent: "", village: "", status: "", remarks: "", files: [] },
+    { id: "land-2", name: "Land 2", survey: "", extent: "", village: "", status: "", remarks: "", files: [] },
+    { id: "land-3", name: "Land 3", survey: "", extent: "", village: "", status: "", remarks: "", files: [] },
+    { id: "land-4", name: "Land 4", survey: "", extent: "", village: "", status: "", remarks: "", files: [] },
+    { id: "land-5", name: "Land 5", survey: "", extent: "", village: "", status: "", remarks: "", files: [] }
+  ]
+};
+
 const SUBDIVISIONS = [
   {
     id: "puttaparthi",
