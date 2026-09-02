@@ -97,32 +97,10 @@
   .orn i:last-child{background:linear-gradient(90deg,var(--gold),transparent)}
   .orn b{color:var(--gold);font-size:11px;line-height:1}
 
-  /* ================= DISTRICT HEAD QUARTERS TAB ================= */
-  .hqcard{
-    display:flex;align-items:center;gap:18px;text-decoration:none;background:#fff;
-    border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:12px;
-    padding:18px 22px;box-shadow:0 6px 18px rgba(18,40,94,.10);
-    transition:transform .18s ease, box-shadow .18s ease;
-  }
-  .hqcard:hover{transform:translateY(-5px);box-shadow:0 16px 34px rgba(18,40,94,.22)}
-  .hqcard:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-  .hqcard .ring{
-    width:58px;height:58px;flex:none;border-radius:50%;
-    background:linear-gradient(135deg,#20489C 0%,#0A1740 100%);
-    display:flex;align-items:center;justify-content:center;border:2px solid var(--gold-lt);
-  }
-  .hqcard .ring svg{width:28px;height:28px;fill:#fff}
-  .hqcard .tx{flex:1}
-  .hqcard .nm,.hqcard .tel,.hqcard .cnt{display:block}
-  .hqcard .nm{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:25px;
-    letter-spacing:.05em;color:var(--navy);line-height:1.15}
-  .hqcard .tel{font-size:14.5px;color:var(--muted);margin-top:1px}
-  .hqcard .cnt{width:max-content;margin-top:7px;font-size:12px;font-weight:600;
-    letter-spacing:.07em;color:#fff;background:var(--gold);padding:5px 14px;border-radius:20px}
-  .hqcard .arw{color:var(--gold);font-size:26px;line-height:1}
-  .split{display:flex;align-items:center;gap:12px;margin:26px 0 18px}
-  .split i{flex:1;height:1px;background:var(--line)}
-  .split span{font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:.14em;color:var(--muted)}
+  /* ================= DISTRICT HEAD QUARTERS CARD ================= */
+  .scard.hq{border:2px solid var(--gold);box-shadow:0 8px 22px rgba(138,109,26,.22)}
+  .scard.hq .nm{font-size:20px;line-height:1.2}
+  .scard.hq .cap{height:104px}
 
   /* ================= SUB-DIVISION CARDS ================= */
   .subgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:20px}
@@ -213,9 +191,7 @@
     .topwrap img{width:46px;height:46px}
     .dtab{padding:9px 16px}
     .fact{border-right:none;border-bottom:1px solid var(--line)}
-    .hqcard{padding:15px 16px;gap:13px}
-    .hqcard .ring{width:48px;height:48px}
-    .hqcard .nm{font-size:21px}
+    .scard.hq .nm{font-size:19px}
   }
 </style>
 </head>
@@ -229,9 +205,8 @@
   <a class="dl" id="lbDl" download>Download this photo</a>
 </div>
 
-<script src="data.js"></script>
 <script>
-(function(){
+function startApp(){
   var shell = document.getElementById('shell');
 
   var ICON = {
@@ -297,17 +272,17 @@
   function subdivisions(){
     var h = crumbs([{label:'Main page',href:'#/'},{label:'Police lands'}]);
     h += banner('POLICE LANDS INFORMATION','District head quarters and sub-division wise land records');
-    if (HQ){
-      h += '<a class="hqcard" href="#/hq">' +
-             '<span class="ring">'+ICON.bldg+'</span>' +
-             '<span class="tx">' +
-               '<span class="nm">'+esc(HQ.name).toUpperCase()+' &ndash; LAND INFO</span>' +
-               (HQ.nameTe ? '<span class="tel">'+esc(HQ.nameTe)+'</span>' : '') +
-               '<span class="cnt">LANDS &ndash; '+((HQ.lands||[]).length)+'</span>' +
-             '</span><span class="arw">&rsaquo;</span></a>';
-      h += '<div class="split"><i></i><span>POLICE SUB-DIVISIONS</span><i></i></div>';
-    }
     h += '<div class="subgrid">';
+    if (HQ){
+      h += '<a class="scard hq" href="#/hq">' +
+           '<div class="cap" style="background:'+grad(HQ.color)+'"><span class="ring">'+ICON.bldg+'</span></div>' +
+           '<div class="bd">' +
+             '<div class="nm" style="color:'+esc(HQ.color)+'">DISTRICT HEAD QUARTERS</div>' +
+             '<div class="tel">'+esc(HQ.nameTe||'')+'</div>' + ornament() +
+             '<span class="cnt" style="background:'+esc(HQ.color)+'">LANDS &ndash; '+((HQ.lands||[]).length)+'</span>' +
+           '</div>' +
+           '<div class="ft" style="background:'+shade(HQ.color,-.30)+'">VIEW LANDS</div></a>';
+    }
     SUBDIVISIONS.forEach(function(s){
       h += '<a class="scard" href="#/sub/'+s.id+'">' +
            '<div class="cap" style="background:'+grad(s.color)+'"><span class="ring">'+ICON.pin+'</span></div>' +
@@ -475,6 +450,18 @@
   }
   window.addEventListener('hashchange', render);
   render();
+}
+
+/* data.js ni ప్రతిసారి fresh ga load chestundi — browser cache problem raadu */
+(function(){
+  var sc = document.createElement('script');
+  sc.src = 'data.js?t=' + Date.now();
+  sc.onload = startApp;
+  sc.onerror = function(){
+    document.getElementById('shell').innerHTML =
+      '<div class="empty" style="margin:40px">data.js file load kaaledu. File repo lo undo ledo check cheyyandi.</div>';
+  };
+  document.head.appendChild(sc);
 })();
 </script>
 </body>
