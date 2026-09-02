@@ -104,6 +104,20 @@
 
   /* ================= SUB-DIVISION CARDS ================= */
   .subgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:20px}
+  /* peddha screen lo anni cards (DHQ + 5 sub-divisions) oke line lo */
+  @media (min-width:900px){
+    .subgrid{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+    .subgrid .scard .cap{height:86px}
+    .subgrid .scard .ring{width:52px;height:52px}
+    .subgrid .scard svg{width:25px;height:25px}
+    .subgrid .scard .bd{padding:14px 8px 13px}
+    .subgrid .scard .nm{font-size:21px;letter-spacing:.03em}
+    .subgrid .scard.hq .nm{font-size:16px;letter-spacing:.02em}
+    .subgrid .scard .tel{font-size:13.5px}
+    .subgrid .scard .cnt{font-size:10.5px;padding:5px 9px;letter-spacing:.03em}
+    .subgrid .scard .ft{font-size:13px;letter-spacing:.05em;padding:10px 4px}
+    .subgrid .orn i{width:22px}
+  }
   .scard{
     display:flex;flex-direction:column;text-decoration:none;background:#fff;
     border-radius:12px;overflow:hidden;border:1px solid var(--line);
