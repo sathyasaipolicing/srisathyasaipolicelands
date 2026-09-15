@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Police Land Records</title>
+<style>
+body { font-family: Arial; background: #667eea; margin: 0; padding: 20px; }
+.container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 10px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+h1 { color: #667eea; text-align: center; margin: 0 0 10px; }
+p { color: #666; text-align: center; margin: 0 0 20px; }
+.search { margin-bottom: 20px; }
+input, select { width: 48%; padding: 10px; margin: 5px; border: 2px solid #ddd; border-radius: 5px; font-size: 14px; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th { background: #f5f5f5; padding: 12px; text-align: left; border: 1px solid #ddd; font-weight: bold; color: #333; }
+td { padding: 10px; border: 1px solid #ddd; }
+tr:hover { background: #f9f9f9; }
+.badge { background: #e8f5e9; color: #4caf50; padding: 4px 8px; border-radius: 3px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🏛️ Sri Sathya Sai District Police</h1>
+<p>Land & Building Records</p>
+<div class="search">
+<input type="text" id="search" placeholder="🔍 Search Station...">
+<select id="filter">
+<option>All Sub-Divisions</option>
+<option>Puttaparthi</option>
+<option>Hindupur</option>
+<option>Dharmavaram</option>
+<option>Penukonda</option>
+<option>Kadiri</option>
+</select>
+</div>
+<table>
+<thead><tr><th>Sub-Division</th><th>Police Station</th><th>Status</th><th>Records</th></tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<script>
+const stations = [
+{d:'Puttaparthi',s:'Amadaguru'},{d:'Puttaparthi',s:'Bukkapatnam'},{d:'Puttaparthi',s:'Kotacheruvu'},{d:'Puttaparthi',s:'Nallamada'},{d:'Puttaparthi',s:'O.D.Cheruvu'},{d:'Puttaparthi',s:'Puttaparthi Town'},{d:'Puttaparthi',s:'Puttaparthi Rural'},{d:'Puttaparthi',s:'Puttaparthi Security wing'},{d:'Puttaparthi',s:'Puttaparthi Airport'},
+{d:'Hindupur',s:'Chilmathur'},{d:'Hindupur',s:'Hindupur I Town'},{d:'Hindupur',s:'Hindupur II Town'},{d:'Hindupur',s:'Hindupur Rural'},{d:'Hindupur',s:'Lepakshi'},{d:'Hindupur',s:'Hindupur Traffic'},
+{d:'Dharmavaram',s:'Bathalapalli'},{d:'Dharmavaram',s:'Chennekothapalli'},{d:'Dharmavaram',s:'Dharmavaram I Town'},{d:'Dharmavaram',s:'Dharmavaram II Town'},{d:'Dharmavaram',s:'Dharmavaram Rural'},{d:'Dharmavaram',s:'Kanaganapalli'},{d:'Dharmavaram',s:'Mudigubba'},{d:'Dharmavaram',s:'Patnam'},{d:'Dharmavaram',s:'Ramagiri'},{d:'Dharmavaram',s:'Tadimarri'},
+{d:'Penukonda',s:'Agali PS'},{d:'Penukonda',s:'Amarapuram PS'},{d:'Penukonda',s:'Gudibanda PS'},{d:'Penukonda',s:'KIA PS'},{d:'Penukonda',s:'Madakasira UPS'},{d:'Penukonda',s:'Parigi PS'},{d:'Penukonda',s:'Penukonda PS'},{d:'Penukonda',s:'Roddam PS'},{d:'Penukonda',s:'Rolla PS'},{d:'Penukonda',s:'Somandapalli PS'},
+{d:'Kadiri',s:'Gandlapenta'},{d:'Kadiri',s:'Kadiri Rural'},{d:'Kadiri',s:'Kadiri Town'},{d:'Kadiri',s:'N.P.Kunta'},{d:'Kadiri',s:'Nallacheruvu'},{d:'Kadiri',s:'Talupula'},{d:'Kadiri',s:'Tanakallu'}
+];
+function render(){const q=document.getElementById('search').value.toLowerCase();const f=document.getElementById('filter').value;const filtered=stations.filter(x=>(f==='All Sub-Divisions'||x.d===f)&&(x.s.toLowerCase().includes(q)||x.d.toLowerCase().includes(q)));document.getElementById('tbody').innerHTML=filtered.map(x=>`<tr><td>${x.d}</td><td>${x.s}</td><td><span class="badge">Active</span></td><td>✓ Digitalized</td></tr>`).join('');
+}
+document.getElementById('search').addEventListener('input',render);document.getElementById('filter').addEventListener('change',render);
+render();
+</script>
+</body>
+</html>
