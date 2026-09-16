@@ -66,6 +66,13 @@
   }
   .cta-button:hover{box-shadow:0 6px 20px rgba(20,90,150,.35);transform:translateY(-1px);}
 
+  /* LANDS PAGE — full reference image with clickable hotspots */
+  .lands-image-wrap{position:relative;width:100%;margin:0;}
+  .lands-image-wrap img{width:100%;display:block;}
+  .lands-hotspot{position:absolute;cursor:pointer;border-radius:8px;transition:box-shadow .15s;}
+  .lands-hotspot:hover{box-shadow:0 0 0 4px rgba(255,255,255,.6) inset;}
+  .lands-hotspot:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+
   nav.crumbs{font-size:14px;color:var(--muted);margin:22px 0 22px;padding-bottom:12px;border-bottom:1px solid var(--line);}
   nav.crumbs a{color:var(--navy);}
   nav.crumbs a:hover{text-decoration:underline;}
@@ -76,71 +83,7 @@
   @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
   @media (prefers-reduced-motion:reduce){.view{animation:none;}}
 
-  /* LANDS LISTING (subdivisions + HQ) */
-  .hero h2{font-size:26px;color:var(--navy-deep);margin-bottom:8px;}
-  .hero p{color:var(--muted);max-width:62ch;margin:0 0 22px;}
-  .totals{display:flex;gap:28px;margin:0 0 30px;flex-wrap:wrap;}
-  .totals .stat b{display:block;font-family:Georgia,serif;font-size:30px;color:var(--gold);line-height:1;}
-  .totals .stat span{font-size:13px;color:var(--muted);}
-
   h3.section-title{font-size:15px;color:var(--navy);margin:0 0 12px;font-weight:600;font-family:inherit;}
-
-  /* LANDS PAGE — colorful photo-style cards */
-  .lands-header{text-align:center;margin-top:26px;}
-  .lands-header h2{color:var(--navy-deep);font-size:24px;letter-spacing:.01em;}
-  .gold-divider{width:120px;height:2px;background:var(--gold);margin:16px auto 30px;position:relative;}
-  .gold-divider::before{
-    content:'\25C6';color:var(--gold);position:absolute;left:50%;top:-7px;
-    transform:translateX(-50%);font-size:11px;
-    background:var(--paper);padding:0 6px;
-  }
-  .tab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
-  .tab-card{
-    position:relative;border-radius:12px;overflow:hidden;min-height:210px;
-    display:flex;flex-direction:column;justify-content:flex-end;
-    box-shadow:0 4px 14px rgba(11,33,56,.12);
-    transition:transform .15s,box-shadow .15s;
-  }
-  .tab-card:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(11,33,56,.22);}
-  .tab-card-bar{
-    position:relative;display:flex;align-items:center;gap:10px;padding:12px 12px;color:#fff;
-  }
-  .tab-card-icon{
-    width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);flex:none;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .tab-card-icon svg{width:15px;height:15px;}
-  .tab-card-text{flex:1;text-align:left;line-height:1.25;}
-  .tab-card-text b{display:block;font-size:12.5px;letter-spacing:.02em;text-transform:uppercase;}
-  .tab-card-text span{display:block;font-size:10px;opacity:.85;margin-top:2px;}
-  .tab-card-arrow{
-    width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.28);flex:none;
-    display:flex;align-items:center;justify-content:center;font-size:13px;
-  }
-  .tab-hq{background:linear-gradient(160deg,#D9BE8C 0%,#8B6F3F 75%);}
-  .tab-hq .tab-card-bar{background:#8B6F3F;}
-  .tab-penukonda{background:linear-gradient(160deg,#FDBA74 0%,#EA580C 75%);}
-  .tab-penukonda .tab-card-bar{background:#EA580C;}
-  .tab-kadiri{background:linear-gradient(160deg,#6EE7B7 0%,#16A34A 75%);}
-  .tab-kadiri .tab-card-bar{background:#16A34A;}
-  .tab-hindupur{background:linear-gradient(160deg,#7DD3FC 0%,#1476C9 75%);}
-  .tab-hindupur .tab-card-bar{background:#1476C9;}
-  .tab-puttaparthi{background:linear-gradient(160deg,#F9A8D4 0%,#DB2777 75%);}
-  .tab-puttaparthi .tab-card-bar{background:#DB2777;}
-  .tab-dharmavaram{background:linear-gradient(160deg,#C4B5FD 0%,#7C3AED 75%);}
-  .tab-dharmavaram .tab-card-bar{background:#7C3AED;}
-
-  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
-  .card{
-    background:var(--card);border:1px solid var(--line);border-radius:5px;
-    padding:16px 18px;display:block;transition:box-shadow .15s,border-color .15s;
-  }
-  .card:hover{box-shadow:0 4px 14px rgba(11,33,56,.09);border-color:var(--navy-soft);}
-  .card .card-name{font-size:17px;color:var(--ink);margin-bottom:12px;font-weight:600;font-family:-apple-system,sans-serif;}
-  .card .card-stats{display:flex;gap:22px;}
-  .card .card-stats div b{display:block;font-family:Georgia,serif;font-size:22px;color:var(--navy);line-height:1;}
-  .card .card-stats div span{font-size:12px;color:var(--muted);}
-  .card.hq{border-left:3px solid var(--gold);}
 
   /* SUBDIVISION LIST */
   .station-list{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--card);}
@@ -199,18 +142,6 @@
 <footer>Sri Sathya Sai District Police &middot; Police Lands Records</footer>
 
 <script>
-/* =========================================================
-   DATA — edit this section to add/update stations or lands.
-   Each subdivision has a key (used in the URL), a display
-   name, and a list of stations. Each station has a name and
-   a list of land entries.
-
-   A land entry can be written two ways:
-     'Some Land Name'                              — plain text
-     { name: 'Some Land Name', link: 'https://…' }  — with a link
-   Use the second form once you have a Google Drive / Maps
-   link for a record; leave others as plain text until then.
-   ========================================================= */
 const DATA = {
   subdivisions: [
     { key: 'puttaparthi', name: 'Puttaparthi', stations: [
@@ -269,16 +200,10 @@ const DATA = {
   districtHQ: { name: 'District Head Quarters', lands: ['Parade Ground Land', 'Firing Range Land'] }
 };
 
-/* ================= helpers ================= */
 function esc(s){
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 function findSub(key){ return DATA.subdivisions.find(s => s.key === key); }
-function totalStations(){ return DATA.subdivisions.reduce((a,s)=>a+s.stations.length,0); }
-function totalLands(){
-  const subTotal = DATA.subdivisions.reduce((a,s)=>a+s.stations.reduce((b,st)=>b+st.lands.length,0),0);
-  return subTotal + DATA.districtHQ.lands.length;
-}
 function crumbs(items){
   const parts = items.map((it,i)=>{
     if(i === items.length-1) return `<span class="current">${esc(it.label)}</span>`;
@@ -301,7 +226,6 @@ function landsList(lands){
   }).join('') + `</ol>`;
 }
 
-/* ================= views ================= */
 function viewHome(){
   document.title = 'Sri Sathya Sai District Police — Lands Digitalization';
   return `<div class="view">
@@ -313,37 +237,25 @@ function viewHome(){
   </div>`;
 }
 
-const PIN_SVG = '<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z" fill="currentColor"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></svg>';
-
 function viewLands(){
   document.title = 'Police Lands Information — Lands Digitalization';
-  const tabOrder = [
-    { kind: 'hq', cls: 'tab-hq' },
-    { kind: 'sub', key: 'penukonda', cls: 'tab-penukonda' },
-    { kind: 'sub', key: 'kadiri', cls: 'tab-kadiri' },
-    { kind: 'sub', key: 'hindupur', cls: 'tab-hindupur' },
-    { kind: 'sub', key: 'puttaparthi', cls: 'tab-puttaparthi' },
-    { kind: 'sub', key: 'dharmavaram', cls: 'tab-dharmavaram' }
+  const spots = [
+    { href: '#/hq',                 left: 2.5,  width: 17.5 },
+    { href: '#/sub/penukonda',      left: 21.5, width: 13.5 },
+    { href: '#/sub/kadiri',         left: 36.5, width: 13.5 },
+    { href: '#/sub/hindupur',       left: 51.5, width: 13.5 },
+    { href: '#/sub/puttaparthi',    left: 66.5, width: 13.5 },
+    { href: '#/sub/dharmavaram',    left: 81.5, width: 14.0 }
   ];
-  const cards = tabOrder.map(o=>{
-    const isHQ = o.kind === 'hq';
-    const href = isHQ ? '#/hq' : '#/sub/' + o.key;
-    const title = isHQ ? DATA.districtHQ.name : esc(findSub(o.key).name);
-    const subtitle = isHQ ? 'Sri Sathya Sai District' : 'Sub-Division';
-    return `<a class="tab-card ${o.cls}" href="${href}">
-      <div class="tab-card-bar">
-        <span class="tab-card-icon">${PIN_SVG}</span>
-        <span class="tab-card-text"><b>${title}</b><span>${subtitle}</span></span>
-        <span class="tab-card-arrow">&rsaquo;</span>
-      </div>
-    </a>`;
-  }).join('');
+  const top = 42, height = 28;
+  const hotspots = spots.map(s=>
+    `<a class="lands-hotspot" href="${s.href}" style="left:${s.left}%;top:${top}%;width:${s.width}%;height:${height}%;" aria-label="View"></a>`
+  ).join('');
   return `<div class="view">
-    <div class="lands-header">
-      <h2>Sri Sathya Sai District Police &mdash; Lands Digitalization</h2>
-      <div class="gold-divider"></div>
+    <div class="lands-image-wrap">
+      <img src="lands.jpg" alt="Sri Sathya Sai District Police — Lands Digitalization: District Head Quarters, Penukonda, Kadiri, Hindupur, Puttaparthi and Dharmavaram Sub-Divisions">
+      ${hotspots}
     </div>
-    <div class="tab-grid">${cards}</div>
   </div>`;
 }
 
@@ -407,7 +319,6 @@ function viewHQ(){
   </div>`;
 }
 
-/* ================= router ================= */
 function parseHash(){
   const h = location.hash.replace(/^#\/?/, '');
   const parts = h.split('/').filter(Boolean);
@@ -420,13 +331,13 @@ function parseHash(){
 function render(){
   const route = parseHash();
   const app = document.getElementById('app');
-  let html, isHome = false;
-  if(route.view === 'lands') html = viewLands();
+  let html, fullBleed = false;
+  if(route.view === 'lands'){ html = viewLands(); fullBleed = true; }
   else if(route.view === 'sub') html = viewSub(route.key);
   else if(route.view === 'ps') html = viewStation(route.key, route.idx);
   else if(route.view === 'hq') html = viewHQ();
-  else { html = viewHome(); isHome = true; }
-  app.innerHTML = isHome ? html : `<div class="page-wrap">${html}</div>`;
+  else { html = viewHome(); fullBleed = true; }
+  app.innerHTML = fullBleed ? html : `<div class="page-wrap">${html}</div>`;
   window.scrollTo(0,0);
 }
 window.addEventListener('hashchange', render);
