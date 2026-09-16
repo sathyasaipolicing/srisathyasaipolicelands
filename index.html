@@ -270,6 +270,44 @@ function viewHome(){
     <div class="cta-row"><a class="cta-button" href="#/lands">View Police Lands Information &rarr;</a></div>
   </div>`;
 }
+  function viewLands(){
+  document.title = 'Police Lands Information — Lands Digitalization';
+  const spots = [
+    { href: '#/hq',                 left: 2.5,  width: 17.5 },
+    { href: '#/sub/penukonda',      left: 21.5, width: 13.5 },
+    { href: '#/sub/kadiri',         left: 36.5, width: 13.5 },
+    { href: '#/sub/hindupur',       left: 51.5, width: 13.5 },
+    { href: '#/sub/puttaparthi',    left: 66.5, width: 13.5 },
+    { href: '#/sub/dharmavaram',    left: 81.5, width: 14.0 }
+  ];
+  const top = 42, height = 28;
+  const hotspotsDesktop = spots.map(s=>
+    `<a class="lands-hotspot" href="${s.href}" style="left:${s.left}%;top:${top}%;width:${s.width}%;height:${height}%;" aria-label="View"></a>`
+  ).join('');
+
+  const mobileSpots = [
+    { href: '#/hq',                left: 1,  top: 28.41, width: 32, height: 34.64 },
+    { href: '#/sub/penukonda',     left: 34, top: 28.41, width: 32, height: 34.64 },
+    { href: '#/sub/kadiri',        left: 67, top: 28.41, width: 32, height: 34.64 },
+    { href: '#/sub/hindupur',      left: 1,  top: 64.20, width: 32, height: 34.64 },
+    { href: '#/sub/puttaparthi',   left: 34, top: 64.20, width: 32, height: 34.64 },
+    { href: '#/sub/dharmavaram',   left: 67, top: 64.20, width: 32, height: 34.64 }
+  ];
+  const hotspotsMobile = mobileSpots.map(s=>
+    `<a class="lands-hotspot" href="${s.href}" style="left:${s.left}%;top:${s.top}%;width:${s.width}%;height:${s.height}%;" aria-label="View"></a>`
+  ).join('');
+
+  return `<div class="view">
+    <div class="lands-image-wrap lands-desktop-only">
+      <img src="lands.jpg" alt="Sri Sathya Sai District Police — Lands Digitalization: District Head Quarters, Penukonda, Kadiri, Hindupur, Puttaparthi and Dharmavaram Sub-Divisions">
+      ${hotspotsDesktop}
+    </div>
+    <div class="lands-image-wrap lands-mobile-only">
+      <img src="lands-mobile.jpg" alt="Sri Sathya Sai District Police — Lands Digitalization: District Head Quarters, Penukonda, Kadiri, Hindupur, Puttaparthi and Dharmavaram Sub-Divisions">
+      ${hotspotsMobile}
+    </div>
+  </div>`;
+}
 
 function viewSub(key){
   const sub = findSub(key);
