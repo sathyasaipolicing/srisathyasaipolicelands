@@ -35,7 +35,6 @@
   a{color:var(--navy);text-decoration:none;}
   a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 
-  /* slim persistent top bar */
   header.site-bar{
     background:var(--navy-deep);
     border-bottom:2px solid var(--gold);
@@ -48,7 +47,6 @@
 
   .page-wrap{max-width:1100px;margin:0 auto;padding:0 20px 64px;}
 
-  /* HOME / hero banner — full width, edge to edge */
   .hero-image-wrap{position:relative;width:100%;margin:0;}
   .hero-image-wrap img{width:100%;display:block;}
   .hero-hotspot{
@@ -66,14 +64,13 @@
   }
   .cta-button:hover{box-shadow:0 6px 20px rgba(20,90,150,.35);transform:translateY(-1px);}
 
-  /* LANDS PAGE — full reference image with clickable hotspots */
   .lands-image-wrap{position:relative;width:100%;margin:0;}
   .lands-image-wrap img{width:100%;display:block;}
   .lands-hotspot{position:absolute;cursor:pointer;border-radius:8px;transition:box-shadow .15s;}
   .lands-hotspot:hover{box-shadow:0 0 0 4px rgba(255,255,255,.6) inset;}
   .lands-hotspot:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
 
-  nav.crumbs{font-size:14px;color:var(--muted);margin:22px 0 22px;padding-bottom:12px;border-bottom:1px solid var(--line);}
+  nav.crumbs{font-size:14px;color:var(--muted);margin:0 0 18px;}
   nav.crumbs a{color:var(--navy);}
   nav.crumbs a:hover{text-decoration:underline;}
   nav.crumbs .sep{margin:0 6px;color:var(--line);}
@@ -85,7 +82,25 @@
 
   h3.section-title{font-size:15px;color:var(--navy);margin:0 0 12px;font-weight:600;font-family:inherit;}
 
-  /* SUBDIVISION LIST */
+  .sub-panel{
+    background:linear-gradient(160deg,#DCEEFB 0%,#EAF6F0 55%,#F3F7FB 100%);
+    border:2px solid var(--gold);border-radius:16px;
+    padding:26px 26px 30px;margin-top:20px;
+  }
+  .detail-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+  .detail-head h2{font-size:26px;color:var(--navy-deep);}
+  .detail-head .sub-label{font-size:13.5px;color:var(--muted);margin-top:4px;}
+  .sub-badge{
+    background:#fff;border:2px solid var(--gold);border-radius:30px;
+    padding:8px 18px;font-size:12.5px;font-weight:700;color:var(--navy-deep);
+    text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;
+  }
+  .gold-divider{width:170px;height:1px;background:var(--gold);margin:16px 0 22px;position:relative;}
+  .gold-divider::before{
+    content:'\25C6';color:var(--gold);position:absolute;left:64px;top:-6px;
+    font-size:10px;background:#EAF6F0;padding:0 4px;
+  }
+
   .station-list{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--card);}
   .station-row{
     display:flex;align-items:center;gap:14px;padding:13px 16px;
@@ -98,22 +113,28 @@
   .station-row .count{font-size:12.5px;padding:3px 10px;border-radius:20px;white-space:nowrap;flex:none;}
   .count.has{background:#EAF1EC;color:var(--good);}
   .count.none{background:#F1EEE7;color:var(--muted);}
-  .station-row .chevron{color:var(--line);flex:none;}
-  .station-row:hover .chevron{color:var(--gold);}
+  .open-pill{
+    display:inline-flex;align-items:center;gap:3px;flex:none;
+    background:var(--navy);color:#fff;font-size:12px;font-weight:600;
+    padding:5px 12px;border-radius:20px;white-space:nowrap;
+  }
+  .station-row:hover .open-pill{background:var(--gold);}
 
-  /* DETAIL VIEW */
-  .detail-head h2{font-size:24px;color:var(--navy-deep);}
-  .detail-head .sub-label{font-size:13.5px;color:var(--muted);margin-top:4px;}
   .lands-block{margin-top:24px;}
   ol.lands{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:5px;background:var(--card);}
   ol.lands li{
     display:flex;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:15px;
-    align-items:baseline;
+    align-items:center;justify-content:space-between;
   }
   ol.lands li:last-child{border-bottom:none;}
   ol.lands li .num{color:var(--gold);font-family:Georgia,serif;flex:none;min-width:18px;}
-  ol.lands li a{text-decoration:underline;}
-  ol.lands li .ext{font-size:12px;color:var(--muted);margin-left:4px;}
+  ol.lands li .land-name{flex:1;}
+  .view-pill{
+    display:inline-flex;align-items:center;gap:3px;flex:none;
+    background:var(--good);color:#fff;font-size:12px;font-weight:600;
+    padding:5px 12px;border-radius:20px;white-space:nowrap;text-decoration:none;
+  }
+  .view-pill:hover{background:#1F5C3F;}
   .empty-state{
     border:1px dashed var(--line);border-radius:5px;padding:22px 18px;
     color:var(--muted);font-size:14.5px;background:#FBFAF6;
@@ -173,7 +194,9 @@ const DATA = {
       { name: 'Mudigubba', lands: ['Mudigubba PS Land'] },
       { name: 'Patnam', lands: ['Patnam PS Land'] },
       { name: 'Ramagiri', lands: ['Land 1'] },
-      { name: 'Tadimarri', lands: ['Tadimarri PS Land'] }
+      { name: 'Tadimarri', lands: ['Tadimarri PS Land'] },
+      { name: 'Dharmavaram Guest House', lands: [] },
+      { name: 'SDPO Office', lands: [] }
     ]},
     { key: 'penukonda', name: 'Penukonda', stations: [
       { name: 'Agali PS', lands: ['Agali PS Land'] },
@@ -219,10 +242,8 @@ function landsList(lands){
   }
   return `<ol class="lands">` + lands.map((item,i)=>{
     const name = landName(item), link = landLink(item);
-    const body = link
-      ? `<a href="${esc(link)}" target="_blank" rel="noopener">${esc(name)}</a><span class="ext">opens link ↗</span>`
-      : `<span>${esc(name)}</span>`;
-    return `<li><span class="num">${i+1}.</span>${body}</li>`;
+    const viewBtn = link ? `<a class="view-pill" href="${esc(link)}" target="_blank" rel="noopener">View &rsaquo;</a>` : '';
+    return `<li><span class="num">${i+1}.</span><span class="land-name">${esc(name)}</span>${viewBtn}</li>`;
   }).join('') + `</ol>`;
 }
 
@@ -265,21 +286,27 @@ function viewSub(key){
   document.title = sub.name + ' Sub-Division — Lands Digitalization';
   const rows = sub.stations.map((st,i)=>{
     const n = st.lands.length;
-    const chip = n ? `<span class="count has">${n} ${n===1?'parcel':'parcels'}</span>` : `<span class="count none">No records</span>`;
+    const chip = n ? `<span class="count has">${n} ${n===1?'land':'lands'}</span>` : `<span class="count none">No records</span>`;
     return `<a class="station-row" href="#/ps/${sub.key}/${i}">
       <span class="idx">${i+1}.</span>
       <span class="name">${esc(st.name)}</span>
       ${chip}
-      <span class="chevron">&rsaquo;</span>
+      <span class="open-pill">Open &rsaquo;</span>
     </a>`;
   }).join('');
-  return `<div class="view">
-    ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: sub.name}])}
-    <div class="detail-head">
-      <h2>${esc(sub.name)} Sub-Division</h2>
-      <div class="sub-label">${sub.stations.length} police stations</div>
+  return `<div class="view page-wrap">
+    <div class="sub-panel">
+      ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: sub.name}])}
+      <div class="detail-head">
+        <div>
+          <h2>${esc(sub.name)} Sub-Division</h2>
+          <div class="sub-label">${sub.stations.length} police stations</div>
+        </div>
+        <span class="sub-badge">${esc(sub.name)} Sub-Division</span>
+      </div>
+      <div class="gold-divider"></div>
+      <div class="station-list">${rows}</div>
     </div>
-    <div class="lands-block"><div class="station-list">${rows}</div></div>
   </div>`;
 }
 
@@ -288,34 +315,44 @@ function viewStation(subKey, idx){
   if(!sub || !sub.stations[idx]) return viewHome();
   const st = sub.stations[idx];
   document.title = st.name + ' — Lands Digitalization';
-  return `<div class="view">
-    ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: sub.name, href:'#/sub/'+sub.key}, {label: st.name}])}
-    <div class="detail-head">
-      <h2>${esc(st.name)}</h2>
-      <div class="sub-label">${esc(sub.name)} Sub-Division</div>
+  return `<div class="view page-wrap">
+    <div class="sub-panel">
+      ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: sub.name, href:'#/sub/'+sub.key}, {label: st.name}])}
+      <div class="detail-head">
+        <div>
+          <h2>${esc(st.name)}</h2>
+          <div class="sub-label">${esc(sub.name)} Sub-Division</div>
+        </div>
+      </div>
+      <div class="gold-divider"></div>
+      <div class="lands-block">
+        <h3 class="section-title">Land records</h3>
+        ${landsList(st.lands)}
+      </div>
+      <a class="print-link" href="#" onclick="window.print();return false;">Print this page</a>
     </div>
-    <div class="lands-block">
-      <h3 class="section-title">Land records</h3>
-      ${landsList(st.lands)}
-    </div>
-    <a class="print-link" href="#" onclick="window.print();return false;">Print this page</a>
   </div>`;
 }
 
 function viewHQ(){
   const hq = DATA.districtHQ;
   document.title = 'District Head Quarters — Lands Digitalization';
-  return `<div class="view">
-    ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: hq.name}])}
-    <div class="detail-head">
-      <h2>${esc(hq.name)}</h2>
-      <div class="sub-label">District-level establishment</div>
+  return `<div class="view page-wrap">
+    <div class="sub-panel">
+      ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: hq.name}])}
+      <div class="detail-head">
+        <div>
+          <h2>${esc(hq.name)}</h2>
+          <div class="sub-label">District-level establishment</div>
+        </div>
+      </div>
+      <div class="gold-divider"></div>
+      <div class="lands-block">
+        <h3 class="section-title">Land records</h3>
+        ${landsList(hq.lands)}
+      </div>
+      <a class="print-link" href="#" onclick="window.print();return false;">Print this page</a>
     </div>
-    <div class="lands-block">
-      <h3 class="section-title">Land records</h3>
-      ${landsList(hq.lands)}
-    </div>
-    <a class="print-link" href="#" onclick="window.print();return false;">Print this page</a>
   </div>`;
 }
 
@@ -331,13 +368,13 @@ function parseHash(){
 function render(){
   const route = parseHash();
   const app = document.getElementById('app');
-  let html, fullBleed = false;
-  if(route.view === 'lands'){ html = viewLands(); fullBleed = true; }
+  let html;
+  if(route.view === 'lands') html = viewLands();
   else if(route.view === 'sub') html = viewSub(route.key);
   else if(route.view === 'ps') html = viewStation(route.key, route.idx);
   else if(route.view === 'hq') html = viewHQ();
-  else { html = viewHome(); fullBleed = true; }
-  app.innerHTML = fullBleed ? html : `<div class="page-wrap">${html}</div>`;
+  else html = viewHome();
+  app.innerHTML = html;
   window.scrollTo(0,0);
 }
 window.addEventListener('hashchange', render);
