@@ -109,4 +109,308 @@
     text-shadow:0 1px 2px rgba(0,0,0,.2);
   }
   .tab-item:hover{box-shadow:0 8px 20px rgba(0,0,0,.2);transform:translateY(-2px);filter:brightness(1.06);}
-  .tab-hq{background:linear-gradient(135deg,#C
+  .tab-hq{background:linear-gradient(135deg,#C79A54,#A9762F);}
+  .tab-puttaparthi{background:linear-gradient(135deg,#34D399,#15803D);}
+  .tab-hindupur{background:linear-gradient(135deg,#38BDF8,#1476C9);}
+  .tab-dharmavaram{background:linear-gradient(135deg,#F472B6,#DB2777);}
+  .tab-penukonda{background:linear-gradient(135deg,#FB923C,#EA580C);}
+  .tab-kadiri{background:linear-gradient(135deg,#A3E635,#65A30D);}
+
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:5px;
+    padding:16px 18px;display:block;transition:box-shadow .15s,border-color .15s;
+  }
+  .card:hover{box-shadow:0 4px 14px rgba(11,33,56,.09);border-color:var(--navy-soft);}
+  .card .card-name{font-size:17px;color:var(--ink);margin-bottom:12px;font-weight:600;font-family:-apple-system,sans-serif;}
+  .card .card-stats{display:flex;gap:22px;}
+  .card .card-stats div b{display:block;font-family:Georgia,serif;font-size:22px;color:var(--navy);line-height:1;}
+  .card .card-stats div span{font-size:12px;color:var(--muted);}
+  .card.hq{border-left:3px solid var(--gold);}
+
+  /* SUBDIVISION LIST */
+  .station-list{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--card);}
+  .station-row{
+    display:flex;align-items:center;gap:14px;padding:13px 16px;
+    border-bottom:1px solid var(--line);transition:background .12s;
+  }
+  .station-row:last-child{border-bottom:none;}
+  .station-row:hover{background:#FBF9F3;}
+  .station-row .idx{color:var(--muted);font-size:13px;width:22px;flex:none;text-align:right;}
+  .station-row .name{flex:1;font-size:15.5px;color:var(--ink);}
+  .station-row .count{font-size:12.5px;padding:3px 10px;border-radius:20px;white-space:nowrap;flex:none;}
+  .count.has{background:#EAF1EC;color:var(--good);}
+  .count.none{background:#F1EEE7;color:var(--muted);}
+  .station-row .chevron{color:var(--line);flex:none;}
+  .station-row:hover .chevron{color:var(--gold);}
+
+  /* DETAIL VIEW */
+  .detail-head h2{font-size:24px;color:var(--navy-deep);}
+  .detail-head .sub-label{font-size:13.5px;color:var(--muted);margin-top:4px;}
+  .lands-block{margin-top:24px;}
+  ol.lands{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:5px;background:var(--card);}
+  ol.lands li{
+    display:flex;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:15px;
+    align-items:baseline;
+  }
+  ol.lands li:last-child{border-bottom:none;}
+  ol.lands li .num{color:var(--gold);font-family:Georgia,serif;flex:none;min-width:18px;}
+  ol.lands li a{text-decoration:underline;}
+  ol.lands li .ext{font-size:12px;color:var(--muted);margin-left:4px;}
+  .empty-state{
+    border:1px dashed var(--line);border-radius:5px;padding:22px 18px;
+    color:var(--muted);font-size:14.5px;background:#FBFAF6;
+  }
+  .print-link{display:inline-block;margin-top:22px;font-size:13px;color:var(--navy-soft);}
+  .print-link:hover{text-decoration:underline;}
+
+  @media print{
+    header.site-bar,nav.crumbs,.print-link,.cta-row{display:none;}
+    body{background:#fff;}
+  }
+
+  footer{max-width:1100px;margin:32px auto 0;padding:16px 20px 40px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);}
+</style>
+</head>
+<body>
+
+<header class="site-bar">
+  <div class="site-bar-inner">
+    <a href="#/">Sri Sathya Sai District Police &mdash; Lands Digitalization</a>
+  </div>
+</header>
+
+<div id="app"></div>
+
+<footer>Sri Sathya Sai District Police &middot; Police Lands Records</footer>
+
+<script>
+/* =========================================================
+   DATA — edit this section to add/update stations or lands.
+   Each subdivision has a key (used in the URL), a display
+   name, and a list of stations. Each station has a name and
+   a list of land entries.
+
+   A land entry can be written two ways:
+     'Some Land Name'                              — plain text
+     { name: 'Some Land Name', link: 'https://…' }  — with a link
+   Use the second form once you have a Google Drive / Maps
+   link for a record; leave others as plain text until then.
+   ========================================================= */
+const DATA = {
+  subdivisions: [
+    { key: 'puttaparthi', name: 'Puttaparthi', stations: [
+      { name: 'Amadaguru', lands: ['Amadaguru PS Land'] },
+      { name: 'Bukkapatnam', lands: ['Bukkapatnam PS Land', 'Bukkapatnam Old Quarters Land'] },
+      { name: 'Kotacheruvu', lands: ['Kotacheruvu PS Land'] },
+      { name: 'Nallamada', lands: ['Nallamada Old PS Circle Office', 'Nallamada 43 Cents Land'] },
+      { name: 'O.D.Cheruvu', lands: ['O.D.Cheruvu PS Land'] },
+      { name: 'Puttaparthi Town', lands: ['Puttaparthi Town PS Land'] },
+      { name: 'Puttaparthi Rural', lands: [] },
+      { name: 'Puttaparthi Security wing', lands: [] },
+      { name: 'Puttaparthi Airport', lands: [] }
+    ]},
+    { key: 'hindupur', name: 'Hindupur', stations: [
+      { name: 'Chilmathur', lands: ['Chilmathur PS Land'] },
+      { name: 'Hindupur I Town', lands: ['Hindupur I Town PS Land'] },
+      { name: 'Hindupur II Town', lands: ['Land 1'] },
+      { name: 'Hindupur Rural', lands: ['Hindupur Rural SP Quarters Land'] },
+      { name: 'Lepakshi', lands: ['Lepakshi PS Land'] },
+      { name: 'Hindupur Traffic', lands: ['Hindupur Traffic PS Land'] }
+    ]},
+    { key: 'dharmavaram', name: 'Dharmavaram', stations: [
+      { name: 'Bathalapalli', lands: ['Battalapalli PS Land'] },
+      { name: 'Chennekothapalli', lands: ['CK Palli PS Land'] },
+      { name: 'Dharmavaram I Town', lands: ['Dharmavaram I Town PS Land'] },
+      { name: 'Dharmavaram II Town', lands: ['Land 1'] },
+      { name: 'Dharmavaram Rural', lands: ['Dharmavaram Rural PS Land'] },
+      { name: 'Kanaganapalli', lands: ['Kanaganapalli PS Land'] },
+      { name: 'Mudigubba', lands: ['Mudigubba PS Land'] },
+      { name: 'Patnam', lands: ['Patnam PS Land'] },
+      { name: 'Ramagiri', lands: ['Land 1'] },
+      { name: 'Tadimarri', lands: ['Tadimarri PS Land'] }
+    ]},
+    { key: 'penukonda', name: 'Penukonda', stations: [
+      { name: 'Agali PS', lands: ['Agali PS Land'] },
+      { name: 'Amarapuram PS', lands: ['Amarapuram PS Land'] },
+      { name: 'Gudibanda PS', lands: ['Gudibanda PS Land'] },
+      { name: 'KIA PS', lands: [] },
+      { name: 'Madakasira UPS', lands: ['Madakasira UPS Land'] },
+      { name: 'Parigi PS', lands: ['Parigi PS Land'] },
+      { name: 'Penukonda PS', lands: ['Penukonda PS Land'] },
+      { name: 'Roddam PS', lands: ['Roddam PS Land'] },
+      { name: 'Rolla PS', lands: ['Rolla PS Land'] },
+      { name: 'Somandapalli PS', lands: ['Somandapalli PS Land'] }
+    ]},
+    { key: 'kadiri', name: 'Kadiri', stations: [
+      { name: 'Gandlapenta', lands: ['Gandlapenta PS Land'] },
+      { name: 'Kadiri Rural', lands: ['Kadiri Rural PS Land'] },
+      { name: 'Kadiri Town', lands: ['Kadiri Town PS Land'] },
+      { name: 'N.P.Kunta', lands: ['N.P.Kunta PS Land'] },
+      { name: 'Nallacheruvu', lands: ['Nallacheruvu PS Land'] },
+      { name: 'Talupula', lands: ['Talupula PS Land'] },
+      { name: 'Tanakallu', lands: ['Tanakallu PS Land'] }
+    ]}
+  ],
+  districtHQ: { name: 'District Head Quarters', lands: ['Parade Ground Land', 'Firing Range Land'] }
+};
+
+/* ================= helpers ================= */
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function findSub(key){ return DATA.subdivisions.find(s => s.key === key); }
+function totalStations(){ return DATA.subdivisions.reduce((a,s)=>a+s.stations.length,0); }
+function totalLands(){
+  const subTotal = DATA.subdivisions.reduce((a,s)=>a+s.stations.reduce((b,st)=>b+st.lands.length,0),0);
+  return subTotal + DATA.districtHQ.lands.length;
+}
+function crumbs(items){
+  const parts = items.map((it,i)=>{
+    if(i === items.length-1) return `<span class="current">${esc(it.label)}</span>`;
+    return `<a href="${it.href}">${esc(it.label)}</a>`;
+  });
+  return `<nav class="crumbs">${parts.join('<span class="sep">/</span>')}</nav>`;
+}
+function landName(item){ return typeof item === 'string' ? item : item.name; }
+function landLink(item){ return typeof item === 'string' ? null : (item.link || null); }
+function landsList(lands){
+  if(!lands.length){
+    return `<div class="empty-state">No land records on file for this station yet.</div>`;
+  }
+  return `<ol class="lands">` + lands.map((item,i)=>{
+    const name = landName(item), link = landLink(item);
+    const body = link
+      ? `<a href="${esc(link)}" target="_blank" rel="noopener">${esc(name)}</a><span class="ext">opens link ↗</span>`
+      : `<span>${esc(name)}</span>`;
+    return `<li><span class="num">${i+1}.</span>${body}</li>`;
+  }).join('') + `</ol>`;
+}
+
+/* ================= views ================= */
+function viewHome(){
+  document.title = 'Sri Sathya Sai District Police — Lands Digitalization';
+  return `<div class="view">
+    <div class="hero-image-wrap">
+      <img src="hero.png" alt="Sri Sathya Sai District Police — Lands Digitalization">
+      <a class="hero-hotspot" href="#/lands" aria-label="View Police Lands Information"></a>
+    </div>
+    <div class="cta-row"><a class="cta-button" href="#/lands">View Police Lands Information &rarr;</a></div>
+  </div>`;
+}
+
+function viewLands(){
+  document.title = 'Police Lands Information — Lands Digitalization';
+  const tabOrder = [
+    { kind: 'hq', cls: 'tab-hq' },
+    { kind: 'sub', key: 'penukonda', cls: 'tab-penukonda' },
+    { kind: 'sub', key: 'kadiri', cls: 'tab-kadiri' },
+    { kind: 'sub', key: 'hindupur', cls: 'tab-hindupur' },
+    { kind: 'sub', key: 'puttaparthi', cls: 'tab-puttaparthi' },
+    { kind: 'sub', key: 'dharmavaram', cls: 'tab-dharmavaram' }
+  ];
+  const tabs = tabOrder.map(o=>{
+    if(o.kind === 'hq'){
+      return `<a class="tab-item ${o.cls}" href="#/hq">${esc(DATA.districtHQ.name)}</a>`;
+    }
+    const sub = findSub(o.key);
+    return `<a class="tab-item ${o.cls}" href="#/sub/${sub.key}">${esc(sub.name)} Sub-Division</a>`;
+  }).join('');
+  return `<div class="view">
+    <div class="lands-page">
+      <h2>Sri Sathya Sai District Police &mdash; Lands Digitalization</h2>
+      <div class="gold-divider"></div>
+      <div class="tab-row">${tabs}</div>
+    </div>
+  </div>`;
+}
+
+function viewSub(key){
+  const sub = findSub(key);
+  if(!sub) return viewHome();
+  document.title = sub.name + ' Sub-Division — Lands Digitalization';
+  const rows = sub.stations.map((st,i)=>{
+    const n = st.lands.length;
+    const chip = n ? `<span class="count has">${n} ${n===1?'parcel':'parcels'}</span>` : `<span class="count none">No records</span>`;
+    return `<a class="station-row" href="#/ps/${sub.key}/${i}">
+      <span class="idx">${i+1}.</span>
+      <span class="name">${esc(st.name)}</span>
+      ${chip}
+      <span class="chevron">&rsaquo;</span>
+    </a>`;
+  }).join('');
+  return `<div class="view">
+    ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: sub.name}])}
+    <div class="detail-head">
+      <h2>${esc(sub.name)} Sub-Division</h2>
+      <div class="sub-label">${sub.stations.length} police stations</div>
+    </div>
+    <div class="lands-block"><div class="station-list">${rows}</div></div>
+  </div>`;
+}
+
+function viewStation(subKey, idx){
+  const sub = findSub(subKey);
+  if(!sub || !sub.stations[idx]) return viewHome();
+  const st = sub.stations[idx];
+  document.title = st.name + ' — Lands Digitalization';
+  return `<div class="view">
+    ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: sub.name, href:'#/sub/'+sub.key}, {label: st.name}])}
+    <div class="detail-head">
+      <h2>${esc(st.name)}</h2>
+      <div class="sub-label">${esc(sub.name)} Sub-Division</div>
+    </div>
+    <div class="lands-block">
+      <h3 class="section-title">Land records</h3>
+      ${landsList(st.lands)}
+    </div>
+    <a class="print-link" href="#" onclick="window.print();return false;">Print this page</a>
+  </div>`;
+}
+
+function viewHQ(){
+  const hq = DATA.districtHQ;
+  document.title = 'District Head Quarters — Lands Digitalization';
+  return `<div class="view">
+    ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information', href:'#/lands'}, {label: hq.name}])}
+    <div class="detail-head">
+      <h2>${esc(hq.name)}</h2>
+      <div class="sub-label">District-level establishment</div>
+    </div>
+    <div class="lands-block">
+      <h3 class="section-title">Land records</h3>
+      ${landsList(hq.lands)}
+    </div>
+    <a class="print-link" href="#" onclick="window.print();return false;">Print this page</a>
+  </div>`;
+}
+
+/* ================= router ================= */
+function parseHash(){
+  const h = location.hash.replace(/^#\/?/, '');
+  const parts = h.split('/').filter(Boolean);
+  if(parts[0] === 'lands') return {view:'lands'};
+  if(parts[0] === 'sub' && parts[1]) return {view:'sub', key: parts[1]};
+  if(parts[0] === 'ps' && parts[1] && parts[2] !== undefined) return {view:'ps', key: parts[1], idx: parseInt(parts[2],10)};
+  if(parts[0] === 'hq') return {view:'hq'};
+  return {view:'home'};
+}
+function render(){
+  const route = parseHash();
+  const app = document.getElementById('app');
+  let html, isHome = false;
+  if(route.view === 'lands') html = viewLands();
+  else if(route.view === 'sub') html = viewSub(route.key);
+  else if(route.view === 'ps') html = viewStation(route.key, route.idx);
+  else if(route.view === 'hq') html = viewHQ();
+  else { html = viewHome(); isHome = true; }
+  app.innerHTML = isHome ? html : `<div class="page-wrap">${html}</div>`;
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', render);
+window.addEventListener('DOMContentLoaded', render);
+render();
+</script>
+
+</body>
+</html>
