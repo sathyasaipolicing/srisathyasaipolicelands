@@ -85,6 +85,31 @@
 
   h3.section-title{font-size:15px;color:var(--navy);margin:0 0 12px;font-weight:600;font-family:inherit;}
 
+  /* LANDS PAGE — tabs styled to match the hero banner */
+  .lands-page{
+    background:linear-gradient(135deg,#EAF4FB 0%,#F5FBF8 100%);
+    border:2px solid var(--gold);
+    border-radius:14px;
+    padding:38px 24px 42px;
+    text-align:center;
+    margin-top:26px;
+  }
+  .lands-page h2{color:var(--navy-deep);font-size:24px;letter-spacing:.01em;}
+  .gold-divider{width:120px;height:2px;background:var(--gold);margin:16px auto 30px;position:relative;}
+  .gold-divider::before{
+    content:'\25C6';color:var(--gold);position:absolute;left:50%;top:-7px;
+    transform:translateX(-50%);font-size:11px;
+    background:linear-gradient(135deg,#EAF4FB 0%,#F5FBF8 100%);padding:0 6px;
+  }
+  .tab-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;}
+  .tab-item{
+    display:inline-block;border:2px solid var(--gold);background:#fff;
+    color:var(--navy-deep);padding:16px 22px;border-radius:10px;
+    font-weight:600;font-size:15px;min-width:170px;
+    transition:box-shadow .15s,transform .15s,background .15s;
+  }
+  .tab-item:hover{box-shadow:0 6px 18px rgba(169,118,47,.28);transform:translateY(-2px);background:#FFFBF2;}
+
   .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
   .card{
     background:var(--card);border:1px solid var(--line);border-radius:5px;
@@ -235,7 +260,6 @@ function totalLands(){
   return subTotal + DATA.districtHQ.lands.length;
 }
 function crumbs(items){
-  // items: [{label, href}] — last item has no href (current page)
   const parts = items.map((it,i)=>{
     if(i === items.length-1) return `<span class="current">${esc(it.label)}</span>`;
     return `<a href="${it.href}">${esc(it.label)}</a>`;
@@ -271,35 +295,27 @@ function viewHome(){
 
 function viewLands(){
   document.title = 'Police Lands Information — Lands Digitalization';
-  const cards = DATA.subdivisions.map(s=>{
-    const landCount = s.stations.reduce((a,st)=>a+st.lands.length,0);
-    return `<a class="card" href="#/sub/${s.key}">
-      <div class="card-name">${esc(s.name)}</div>
-      <div class="card-stats">
-        <div><b>${s.stations.length}</b><span>Police stations</span></div>
-        <div><b>${landCount}</b><span>Land parcels</span></div>
-      </div>
-    </a>`;
+  const tabOrder = [
+    { kind: 'hq' },
+    { kind: 'sub', key: 'penukonda' },
+    { kind: 'sub', key: 'kadiri' },
+    { kind: 'sub', key: 'hindupur' },
+    { kind: 'sub', key: 'puttaparthi' },
+    { kind: 'sub', key: 'dharmavaram' }
+  ];
+  const tabs = tabOrder.map(o=>{
+    if(o.kind === 'hq'){
+      return `<a class="tab-item" href="#/hq">${esc(DATA.districtHQ.name)}</a>`;
+    }
+    const sub = findSub(o.key);
+    return `<a class="tab-item" href="#/sub/${sub.key}">${esc(sub.name)} Sub-Division</a>`;
   }).join('');
-  const hqCard = `<a class="card hq" href="#/hq">
-      <div class="card-name">${esc(DATA.districtHQ.name)}</div>
-      <div class="card-stats">
-        <div><b>${DATA.districtHQ.lands.length}</b><span>Land parcels</span></div>
-      </div>
-    </a>`;
   return `<div class="view">
-    ${crumbs([{label:'Home', href:'#/'}, {label:'Police Lands Information'}])}
-    <div class="hero">
-      <h2>Police Lands Information</h2>
-      <p>Select a sub-division or the District Head Quarters below to view its police stations and land records.</p>
-      <div class="totals">
-        <div class="stat"><b>${DATA.subdivisions.length}</b><span>Sub-divisions</span></div>
-        <div class="stat"><b>${totalStations()}</b><span>Police stations</span></div>
-        <div class="stat"><b>${totalLands()}</b><span>Land parcels on record</span></div>
-      </div>
+    <div class="lands-page">
+      <h2>Sri Sathya Sai District Police &mdash; Lands Digitalization</h2>
+      <div class="gold-divider"></div>
+      <div class="tab-row">${tabs}</div>
     </div>
-    <h3 class="section-title">Available sub-divisions</h3>
-    <div class="card-grid">${cards}${hqCard}</div>
   </div>`;
 }
 
