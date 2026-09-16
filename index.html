@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Sathya Sai District Police — Lands Digitalization</title>
+<style>
+  :root{
+    --navy-deep:#0B2138;
+    --navy:#16385C;
+    --navy-soft:#274B70;
+    --gold:#A9762F;
+    --gold-soft:#C79A54;
+    --paper:#F6F3EC;
+    --card:#FFFFFF;
+    --line:#DED7C7;
+    --ink:#182430;
+    --muted:#5B6672;
+    --good:#2F6B4F;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{
+    font-family:Georgia,"Times New Roman",serif;
+    font-weight:400;
+    margin:0;
+  }
+  a{color:var(--navy);text-decoration:none;}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  header.site-header{
+    background:var(--navy-deep);
+    color:#EFEAE0;
+    padding:22px 20px 18px;
+    border-bottom:3px solid var(--gold);
+    box-shadow:0 4px 0 -3px var(--navy) inset;
+  }
+  .header-inner{
+    max-width:900px;margin:0 auto;
+    display:flex;align-items:center;gap:14px;
+  }
+  .badge-icon{flex:none;width:38px;height:38px;}
+  .badge-icon svg{width:100%;height:100%;display:block;}
+  .header-text .eyebrow{font-size:12.5px;letter-spacing:.02em;color:var(--gold-soft);margin-bottom:2px;}
+  .header-text h1{font-size:21px;color:#FBF9F4;}
+  .header-text a{color:inherit;}
+  .header-text a:hover{text-decoration:underline;}
+
+  main{max-width:900px;margin:0 auto;padding:28px 20px 64px;}
+
+  nav.crumbs{font-size:14px;color:var(--muted);margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--line);}
+  nav.crumbs a{color:var(--navy);}
+  nav.crumbs a:hover{text-decoration:underline;}
+  nav.crumbs .sep{margin:0 6px;color:var(--line);}
+  nav.crumbs .current{color:var(--ink);}
+
+  .view{animation:fadein .25s ease;}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+  @media (prefers-reduced-motion:reduce){.view{animation:none;}}
+
+  /* HOME */
+  .hero h2{font-size:26px;color:var(--navy-deep);margin-bottom:8px;}
+  .hero p{color:var(--muted);max-width:62ch;margin:0 0 22px;}
+  .totals{display:flex;gap:28px;margin:0 0 30px;flex-wrap:wrap;}
+  .totals .stat b{display:block;font-family:Georgia,serif;font-size:30px;color:var(--gold);line-height:1;}
+  .totals .stat span{font-size:13px;color:var(--muted);}
+
+  h3.section-title{font-size:15px;color:var(--navy);margin:0 0 12px;font-weight:600;font-family:inherit;}
+
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:5px;
+    padding:16px 18px;display:block;transition:box-shadow .15s,border-color .15s;
+  }
+  .card:hover{box-shadow:0 4px 14px rgba(11,33,56,.09);border-color:var(--navy-soft);}
+  .card .card-name{font-size:17px;color:var(--ink);margin-bottom:12px;font-weight:600;font-family:-apple-system,sans-serif;}
+  .card .card-stats{display:flex;gap:22px;}
+  .card .card-stats div b{display:block;font-family:Georgia,serif;font-size:22px;color:var(--navy);line-height:1;}
+  .card .card-stats div span{font-size:12px;color:var(--muted);}
+  .card.hq{border-left:3px solid var(--gold);}
+
+  /* SUBDIVISION LIST */
+  .station-list{border:1px solid var(--line);border-radius:5px;overflow:hidden;background:var(--card);}
+  .station-row{
+    display:flex;align-items:center;gap:14px;padding:13px 16px;
+    border-bottom:1px solid var(--line);transition:background .12s;
+  }
+  .station-row:last-child{border-bottom:none;}
+  .station-row:hover{background:#FBF9F3;}
+  .station-row .idx{color:var(--muted);font-size:13px;width:22px;flex:none;text-align:right;}
+  .station-row .name{flex:1;font-size:15.5px;color:var(--ink);}
+  .station-row .count{font-size:12.5px;padding:3px 10px;border-radius:20px;white-space:nowrap;flex:none;}
+  .count.has{background:#EAF1EC;color:var(--good);}
+  .count.none{background:#F1EEE7;color:var(--muted);}
+  .station-row .chevron{color:var(--line);flex:none;}
+  .station-row:hover .chevron{color:var(--gold);}
+
+  /* DETAIL VIEW */
+  .detail-head h2{font-size:24px;color:var(--navy-deep);}
+  .detail-head .sub-label{font-size:13.5px;color:var(--muted);margin-top:4px;}
+  .lands-block{margin-top:24px;}
+  ol.lands{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:5px;background:var(--card);}
+  ol.lands li{
+    display:flex;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line);font-size:15px;
+  }
+  ol.lands li:last-child{border-bottom:none;}
+  ol.lands li .num{color:var(--gold);font-family:Georgia,serif;flex:none;min-width:18px;}
+  .empty-state{
+    border:1px dashed var(--line);border-radius:5px;padding:22px 18px;
+    color:var(--muted);font-size:14.5px;background:#FBFAF6;
+  }
+  .print-link{display:inline-block;margin-top:22px;font-size:13px;color:var(--navy-soft);}
+  .print-link:hover{text-decoration:underline;}
+
+  @media print{
+    header.site-header,nav.crumbs,.print-link{display:none;}
+    body{background:#fff;}
+  }
+
+  footer{max-width:900px;margin:0 auto;padding:0 20px 40px;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:16px;}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <span class="badge-icon" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 3 L34 9 V19 C34 28 28 34 20 37 C12 34 6 28 6 19 V9 Z" stroke="#C79A54" stroke-width="2" fill="#0B2138"/>
+        <path d="M20 12 L20 28 M13 20 L27 20" stroke="#C79A54" stroke-width="2"/>
+      </svg>
+    </span>
+    <div class="header-text">
+      <div class="eyebrow">Sri Sathya Sai District Police</div>
+      <h1><a href="#/">Lands Digitalization</a></h1>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>Sri Sathya Sai District Police &middot; Police Lands Records</footer>
+
+<script>
+/* =========================================================
+   DATA — edit this section to add/update stations or lands.
+   Each subdivision has a key (used in the URL), a display
+   name, and a list of stations. Each station has a name and
+   a list of land descriptions (empty list = no records yet).
+   ========================================================= */
+const DATA = {
+  subdivisions: [
+    { key: 'puttaparthi', name: 'Puttaparthi', stations: [
+      { name: 'Amadaguru', lands: ['Amadaguru PS Land'] },
+      { name: 'Bukkapatnam', lands: ['Bukkapatnam PS Land', 'Bukkapatnam Old Quarters Land'] },
+      { name: 'Kotacheruvu', lands: ['Kotacheruvu PS Land'] },
+      { name: 'Nallamada', lands: ['Nallamada Old PS Circle Office', 'Nallamada 43 Cents Land'] },
+      { name: 'O.D.Cheruvu', lands: ['O.D.Cheruvu PS Land'] },
+      { name: 'Puttaparthi Town', lands: ['Puttaparthi Town PS Land'] },
+      { name: 'Puttaparthi Rural', lands: [] },
+      { name: 'Puttaparthi Security wing', lands: [] },
+      { name: 'Puttaparthi Airport', lands: [] }
+    ]},
+    { key: 'hindupur', name: 'Hindupur', stations: [
+      { name: 'Chilmathur', lands: ['Chilmathur PS Land'] },
+      { name: 'Hindupur I Town', lands: ['Hindupur I Town PS Land'] },
+      { name: 'Hindupur II Town', lands: ['Land 1'] },
+      { name: 'Hindupur Rural', lands: ['Hindupur Rural SP Quarters Land'] },
+      { name: 'Lepakshi', lands: ['Lepakshi PS Land'] },
+      { name: 'Hindupur Traffic', lands: ['Hindupur Traffic PS Land'] }
+    ]},
+    { key: 'dharmavaram', name: 'Dharmavaram', stations: [
+      { name: 'Bathalapalli', lands: ['Battalapalli PS Land'] },
+      { name: 'Chennekothapalli', lands: ['CK Palli PS Land'] },
+      { name: 'Dharmavaram I Town', lands: ['Dharmavaram I Town PS Land'] },
+      { name: 'Dharmavaram II Town', lands: ['Land 1'] },
+      { name: 'Dharmavaram Rural', lands: ['Dharmavaram Rural PS Land'] },
+      { name: 'Kanaganapalli', lands: ['Kanaganapalli PS Land'] },
+      { name: 'Mudigubba', lands: ['Mudigubba PS Land'] },
+      { name: 'Patnam', lands: ['Patnam PS Land'] },
+      { name: 'Ramagiri', lands: ['Land 1'] },
+      { name: 'Tadimarri', lands: ['Tadimarri PS Land'] }
+    ]},
+    { key: 'penukonda', name: 'Penukonda', stations: [
+      { name: 'Agali PS', lands: ['Agali PS Land'] },
+      { name: 'Amarapuram PS', lands: ['Amarapuram PS Land'] },
+      { name: 'Gudibanda PS', lands: ['Gudibanda PS Land'] },
+      { name: 'KIA PS', lands: [] },
+      { name: 'Madakasira UPS', lands: ['Madakasira UPS Land'] },
+      { name: 'Parigi PS', lands: ['Parigi PS Land'] },
+      { name: 'Penukonda PS', lands: ['Penukonda PS Land'] },
+      { name: 'Roddam PS', lands: ['Roddam PS Land'] },
+      { name: 'Rolla PS', lands: ['Rolla PS Land'] },
+      { name: 'Somandapalli PS', lands: ['Somandapalli PS Land'] }
+    ]},
+    { key: 'kadiri', name: 'Kadiri', stations: [
+      { name: 'Gandlapenta', lands: ['Gandlapenta PS Land'] },
+      { name: 'Kadiri Rural', lands: ['Kadiri Rural PS Land'] },
+      { name: 'Kadiri Town', lands: ['Kadiri Town PS Land'] },
+      { name: 'N.P.Kunta', lands: ['N.P.Kunta PS Land'] },
+      { name: 'Nallacheruvu', lands: ['Nallacheruvu PS Land'] },
+      { name: 'Talupula', lands: ['Talupula PS Land'] },
+      { name: 'Tanakallu', lands: ['Tanakallu PS Land'] }
+    ]}
+  ],
+  districtHQ: { name: 'District Head Quarters', lands: ['Parade Ground Land', 'Firing Range Land'] }
+};
+
+/* ================= helpers ================= */
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function findSub(key){ return DATA.subdivisions.find(s => s.key === key); }
+function totalStations(){ return DATA.subdivisions.reduce((a,s)=>a+s.stations.length,0); }
+function totalLands(){
+  const subTotal = DATA.subdivisions.reduce((a,s)=>a+s.stations.reduce((b,st)=>b+st.lands.length,0),0);
+  return subTotal + DATA.districtHQ.lands.length;
+}
+function crumbs(items){
+  // items: [{label, href}] — last item has no href (current page)
+  const parts = items.map((it,i)=>{
+    if(i === items.length-1) return `<span class="current">${esc(it.label)}</span>`;
+    return `<a href="${it.href}">${esc(it.label)}</a>`;
+  });
+  return `<nav class="crumbs">${parts.join('<span class="sep">/</span>')}</nav>`;
+}
+function landsList(lands){
+  if(!lands.length){
+    return `<div class="empty-state">No land records on file for this station yet.</div>`;
+  }
+  return `<ol class="lands">` + lands.map((l,i)=>`<li><span class="num">${i+1}.</span><span>${esc(l)}</span></li>`).join('') + `</ol>`;
+}
+
+/* ================= views ================= */
+function viewHome(){
+  document.title = 'Lands Digitalization — Sri Sathya Sai District Police';
+  const cards = DATA.subdivisions.map(s=>{
+    const landCount = s.stations.reduce((a,st)=>a+st.lands.length,0);
+    return `<a class="card" href="#/sub/${s.key}">
+      <div class="card-name">${esc(s.name)}</div>
+      <div class="card-stats">
+        <div><b>${s.stations.length}</b><span>Police stations</span></div>
+        <div><b>${landCount}</b><span>Land parcels</span></div>
+      </div>
+    </a>`;
+  }).join('');
+  const hqCard = `<a class="card hq" href="#/hq">
+      <div class="card-name">${esc(DATA.districtHQ.name)}</div>
+      <div class="card-stats">
+        <div><b>${DATA.districtHQ.lands.length}</b><span>Land parcels</span></div>
+      </div>
+    </a>`;
+  return `<div class="view">
+    <div class="hero">
+      <h2>Sri Sathya Sai District Police — Lands Digitalization</h2>
+      <p>Select a sub-division or the District Head Quarters below to view its police stations and land records.</p>
+      <div class="totals">
+        <div class="stat"><b>${DATA.subdivisions.length}</b><span>Sub-divisions</span></div>
+        <div class="stat"><b>${totalStations()}</b><span>Police stations</span></div>
+        <div class="stat"><b>${totalLands()}</b><span>Land parcels on record</span></div>
+      </div>
+    </div>
+    <h3 class="section-title">Available sub-divisions</h3>
+    <div class="card-grid">${cards}${hqCard}</div>
+  </div>`;
+}
+
+function viewSub(key){
+  const sub = findSub(key);
+  if(!sub) return viewHome();
+  document.title = sub.name + ' Sub-Division — Lands Digitalization';
+  const rows = sub.stations.map((st,i)=>{
+    const n = st.lands.length;
+    const chip = n ? `<span class="count has">${n} ${n===1?'parcel':'parcels'}</span>` : `<span class="count none">No records</span>`;
+    return `<a class="station-row" href="#/ps/${sub.key}/${i}">
+      <span class="idx">${i+1}.</span>
+      <span class="name">${esc(st.name)}</span>
+      ${chip}
+      <span class="chevron">&rsaquo;</span>
+    </a>`;
+  }).join('');
+  return `<div class="view">
+    ${crumbs([{label:'Home', href:'#/'}, {label: sub.name}])}
+    <div class="detail-head">
+      <h2>${esc(sub.name)} Sub-Division</h2>
+      <div class="sub-label">${sub.stations.length} police stations</div>
+    </div>
+    <div class="lands-block"><div class="station-list">${rows}</div></div>
+  </div>`;
+}
+
+function viewStation(subKey, idx){
+  const sub = findSub(subKey);
+  if(!sub || !sub.stations[idx]) return viewHome();
+  const st = sub.stations[idx];
+  document.title = st.name + ' — Lands Digitalization';
+  return `<div class="view">
+    ${crumbs([{label:'Home', href:'#/'}, {label: sub.name, href:'#/sub/'+sub.key}, {label: st.name}])}
+    <div class="detail-head">
+      <h2>${esc(st.name)}</h2>
+      <div class="sub-label">${esc(sub.name)} Sub-Division</div>
+    </div>
+    <div class="lands-block">
+      <h3 class="section-title">Land records</h3>
+      ${landsList(st.lands)}
+    </div>
+    <a class="print-link" href="#" onclick="window.print();return false;">Print this page</a>
+  </div>`;
+}
+
+function viewHQ(){
+  const hq = DATA.districtHQ;
+  document.title = 'District Head Quarters — Lands Digitalization';
+  return `<div class="view">
+    ${crumbs([{label:'Home', href:'#/'}, {label: hq.name}])}
+    <div class="detail-head">
+      <h2>${esc(hq.name)}</h2>
+      <div class="sub-label">District-level establishment</div>
+    </div>
+    <div class="lands-block">
+      <h3 class="section-title">Land records</h3>
+      ${landsList(hq.lands)}
+    </div>
+    <a class="print-link" href="#" onclick="window.print();return false;">Print this page</a>
+  </div>`;
+}
+
+/* ================= router ================= */
+function parseHash(){
+  const h = location.hash.replace(/^#\/?/, '');
+  const parts = h.split('/').filter(Boolean);
+  if(parts[0] === 'sub' && parts[1]) return {view:'sub', key: parts[1]};
+  if(parts[0] === 'ps' && parts[1] && parts[2] !== undefined) return {view:'ps', key: parts[1], idx: parseInt(parts[2],10)};
+  if(parts[0] === 'hq') return {view:'hq'};
+  return {view:'home'};
+}
+function render(){
+  const route = parseHash();
+  const app = document.getElementById('app');
+  let html;
+  if(route.view === 'sub') html = viewSub(route.key);
+  else if(route.view === 'ps') html = viewStation(route.key, route.idx);
+  else if(route.view === 'hq') html = viewHQ();
+  else html = viewHome();
+  app.innerHTML = html;
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange', render);
+window.addEventListener('DOMContentLoaded', render);
+render();
+</script>
+
+</body>
+</html>
